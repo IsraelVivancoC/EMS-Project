@@ -1,62 +1,64 @@
-# Employee Resource Manager (ERM) — Phase 1: The Foundation
+# Employee Resource Manager (ERM) — Phase 1.1: The Refactor
 
-A foundational Java implementation for corporate workforce management. This project focuses on **Encapsulation** and **State Management** to handle sensitive employee data securely.
+A refined Java implementation transitioning from procedural logic to **Domain-Driven Design**. This phase focuses on **Separation of Concerns** by introducing a dedicated manager layer.
 
 ---
 
 ## The Quick Start (ABC)
 
-This system acts as a digital filing cabinet for a company's most important asset: its people.
+This system now operates through a service-based architecture, separating the "how" from the "what."
 
-* **The Goal:** Transition from "loose variables" to structured **Objects**.
-* **The Mechanism:** A dedicated `Employee` class that protects data using `private` access modifiers (Encapsulation).
-* **The Result:** A clean, reusable blueprint that ensures data integrity (e.g., preventing negative salaries).
+* **The Goal:** Decouple data storage from business logic.
+* **The Mechanism:** A new `EmployeeManager` class (The Service Layer) that handles all list operations and search algorithms.
+* **The Result:** A modular structure where `Main.java` only handles high-level execution, not low-level logic.
 
 ---
 
-## 🚀 How to Run
+##  How to Run
 
 1.  **Compile:** ```bash
-    javac Main.java Employee.java
+    javac Main.java Employee.java EmployeeManager.java
     ```
 2.  **Execute:** ```bash
     java Main
     ```
-3.  **Interact:** Follow the terminal prompts to create your first organizational record.
+3.  **Interact:** View the automated search testing and employee directory in the console output.
 
 ---
 
 ## Deep Dive: Architecture & Strategy
 
-### Real-World Use Case
-In a corporate environment, data cannot be "flat." You must associate names with unique IDs to avoid collisions between employees with the same name. By using **Object-Oriented Programming (OOP)**, we ensure that an "Employee" is a complete package of both data and logic.
+### The DAO Pattern (Data Access Object)
+We have introduced a simplified **DAO-style** pattern. The `EmployeeManager` class acts as the gatekeeper for the `ArrayList`, ensuring that all data manipulation (adding, searching, and eventually deleting) happens in one centralized location.
+
+
 
 ### Components
-* **The Model (Employee.java):** The "Blueprint." It defines what an employee *is* (ID, Name, Dept, Salary).
-* **The Controller (Main.java):** The "Brain." It handles user input and manages the collection of employees.
-* **Encapsulation:** By making fields `private`, we prevent external code from corrupting data. Access is only granted through controlled "Getters" and "Setters."
-
-
+* **The Model (Employee.java):** Purely for data definition. No logic, just encapsulation.
+* **The Service (EmployeeManager.java):** Contains the "Search Engine" and collection management.
+* **The Entry Point (Main.java):** Acts as the system orchestrator, initializing the manager and triggering events.
 
 ---
 
 ## NOTE: Design Decisions
 
-* **ArrayList vs. Arrays:** We chose `ArrayList` for version 1.0 because it is **dynamic**. Unlike standard arrays, the list grows automatically as the company hires new staff.
-* **Memory State:** Currently, data lives in **RAM**. If the program closes, the data is wiped. Solving this is the primary goal for Phase 2.
+* **Linear Search:** For **v1.1**, we implemented a `for-each` loop to find employees by ID. While simple, it is highly effective for the current memory-based state.
+* **Parameter Type Safety:** We utilize specific object parameters (`Employee emp`) in our manager methods to prevent type errors and ensure data integrity.
 
 ---
 
 ## Project Roadmap: The "Tune-Up"
 
-This is **Phase 1** of a multi-part series on building enterprise-grade software.
+This is **Phase 1.1** of a multi-part series. We have accelerated the "Search" feature from Phase 3 into the current build.
 
-1.  **Phase 1 (Current):** Core OOP & CLI. Manual data entry and memory-based storage.
-2.  **Phase 2 (Coming):** **File Persistence.** Implementing logic to save/load employees from a `.csv` file.
-3.  **Phase 3 (Advanced):** **Search & Sort.** Implementing algorithms to filter by Department or sort by Seniority.
-4.  **Phase 4 (Expert):** **Interface & Database.** Moving from a console to a SQL Database.
+1.  **Phase 1:** Core OOP & CLI. (Completed)
+2.  **Phase 1.1 (Current):** **The Refactor.** Implementing the `EmployeeManager` class and Search logic.
+3.  **Phase 2 (Next):** **Data Cleanup.** Adding "Delete" functionality using Java Lambdas and `removeIf` logic.
+4.  **Phase 3:** **File Persistence.** Implementing logic to save/load employees from a `.csv` file.
+5.  **Phase 4:** **Database Integration.** Moving to a SQL-based persistent storage.
 
 ---
 
 ##  References & Best Practices
-* **SOLID Principles:** This project aims to follow the **Single Responsibility Principle**.
+* **Separation of Concerns (SoC):** By splitting logic into three files, we ensure that changing the search algorithm doesn't require changing the `Employee` model.
+* **KISS Principle:** Keeping it Simple, Stupid. We are using standard Java collections
