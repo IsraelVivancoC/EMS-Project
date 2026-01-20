@@ -40,6 +40,7 @@ public class Main {
 
         case 2: 
             System.out.print("Enter ID to search: ");
+            reader.nextLine(); // Buffer cleanup
             int searchId = reader.nextInt();
             manager.findById(searchId);
             break;
@@ -47,6 +48,7 @@ public class Main {
         case 3: 
             System.out.print("Enter ID to delete: ");
             int delId = reader.nextInt();
+            reader.nextLine(); // Buffer cleanup
             manager.deleteById(delId);
             break;
 
