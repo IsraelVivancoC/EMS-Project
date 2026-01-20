@@ -29,4 +29,15 @@ public class EmployeeManager {
 		
 		}
 	}
+	
+	public void deleteById(int id) {
+		boolean removed = employeesList.removeIf(emp -> emp.getId()==id);
+		
+		if(removed) {
+			System.out.println("Employee with ID : " + id + ", has been removed.");
+		} else {
+			System.out.println("Error! No employee found with ID:  " + id + " Nothing eas deleated. " );
+		}
+		
+	}
 }

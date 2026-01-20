@@ -20,11 +20,14 @@ public class Main {
         
         System.out.println("Searching testing");
         
-        manager.findById(001);
         manager.findById(003);
         
+        //let's try the delete function
         
+        manager.deleteById(003);
         
+        manager.displayAll();
+         
         
         System.out.println("----------------------------------------------------------------------");
     }
