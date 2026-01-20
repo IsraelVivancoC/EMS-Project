@@ -1,16 +1,16 @@
-# Employee Resource Manager (ERM) — Phase 1.1: The Refactor
+# Employee Resource Manager (ERM) — Phase 2.0: Data Cleanup
 
-A refined Java implementation transitioning from procedural logic to **Domain-Driven Design**. This phase focuses on **Separation of Concerns** by introducing a dedicated manager layer.
+This version marks the transition to **Modern Java (JDK 8+)** features, focusing on efficient data manipulation and the implementation of the "Delete" lifecycle.
 
 ---
 
 ## The Quick Start (ABC)
 
-This system now operates through a service-based architecture, separating the "how" from the "what."
+With the foundation and search engine built, v2.0 focuses on maintaining a healthy dataset by allowing record removal.
 
-* **The Goal:** Decouple data storage from business logic.
-* **The Mechanism:** A new `EmployeeManager` class (The Service Layer) that handles all list operations and search algorithms.
-* **The Result:** A modular structure where `Main.java` only handles high-level execution, not low-level logic.
+* **The Goal:** Implement a safe and efficient way to remove records from memory.
+* **The Mechanism:** Using **Lambda Expressions** and the `removeIf` predicate to avoid `ConcurrentModificationException`.
+* **The Result:** A CRUD-capable (Create, Read, Update, Delete) management system that handles dynamic data changes.
 
 ---
 
@@ -22,43 +22,40 @@ This system now operates through a service-based architecture, separating the "h
 2.  **Execute:** ```bash
     java Main
     ```
-3.  **Interact:** View the automated search testing and employee directory in the console output.
+3.  **Interact:** Observe the console output as the system removes a record (ID: 2) and refreshes the directory.
 
 ---
 
 ## Deep Dive: Architecture & Strategy
 
-### The DAO Pattern (Data Access Object)
-We have introduced a simplified **DAO-style** pattern. The `EmployeeManager` class acts as the gatekeeper for the `ArrayList`, ensuring that all data manipulation (adding, searching, and eventually deleting) happens in one centralized location.
+### Modern Functional Programming
+Instead of using the classic **Iterator Pattern** (which requires manual cursor management), we utilized **Functional Interfaces**. 
 
 
 
-### Components
-* **The Model (Employee.java):** Purely for data definition. No logic, just encapsulation.
-* **The Service (EmployeeManager.java):** Contains the "Search Engine" and collection management.
-* **The Entry Point (Main.java):** Acts as the system orchestrator, initializing the manager and triggering events.
+The `removeIf` method takes a "Predicate" (a true/false condition). As Java iterates through the `ArrayList`, it applies our lambda `emp -> emp.getId() == id` to each element. If the condition is true, the element is removed safely.
+
+### Why not a standard For-loop?
+Standard loops fail during removal because the list's size changes while the index is still moving. By using `removeIf`, we let the Java Collections Framework handle the structural changes safely.
 
 ---
 
 ## NOTE: Design Decisions
 
-* **Linear Search:** For **v1.1**, we implemented a `for-each` loop to find employees by ID. While simple, it is highly effective for the current memory-based state.
-* **Parameter Type Safety:** We utilize specific object parameters (`Employee emp`) in our manager methods to prevent type errors and ensure data integrity.
+* **Boolean Feedback:** The `deleteById` method now returns (or prints) a status message. This is crucial for **User Experience (UX)** so the user knows if the operation succeeded or if the ID was invalid.
+* **Lambda vs. Iterator:** We chose Lambdas for v2.0 to keep the codebase concise and readable, following modern industry standards.
 
 ---
 
 ## Project Roadmap: The "Tune-Up"
 
-This is **Phase 1.1** of a multi-part series. We have accelerated the "Search" feature from Phase 3 into the current build.
-
-1.  **Phase 1:** Core OOP & CLI. (Completed)
-2.  **Phase 1.1 (Current):** **The Refactor.** Implementing the `EmployeeManager` class and Search logic.
-3.  **Phase 2 (Next):** **Data Cleanup.** Adding "Delete" functionality using Java Lambdas and `removeIf` logic.
-4.  **Phase 3:** **File Persistence.** Implementing logic to save/load employees from a `.csv` file.
-5.  **Phase 4:** **Database Integration.** Moving to a SQL-based persistent storage.
+1.  **Phase 1 & 1.1:** Core OOP, Service Layer, and Search Logic. (Completed)
+2.  **Phase 2.0 (Current):** **Data Cleanup.** Implementation of Delete functionality.
+3.  **Phase 2.1 (Next):** **Interactive CLI.** Implementing `java.util.Scanner` to allow real-time user input.
+4.  **Phase 3:** **File Persistence.** Moving from RAM to `.csv` storage.
 
 ---
 
 ##  References & Best Practices
-* **Separation of Concerns (SoC):** By splitting logic into three files, we ensure that changing the search algorithm doesn't require changing the `Employee` model.
-* **KISS Principle:** Keeping it Simple, Stupid. We are using standard Java collections
+* **DRY (Don't Repeat Yourself):** Logic is kept strictly within the `EmployeeManager`.
+* **Clean Code:** Methods are small, focused, and named according to their specific action.
