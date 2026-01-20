@@ -6,7 +6,7 @@ This version transforms the system from a static script into a fully interactive
 
 ## The Quick Start (ABC)
 
-v3.0 introduces the `java.util.Scanner` implementation, enabling a dynamic loop where the user controls the application life cycle.
+v3.0 introduces the `java.util.Scanner` implementation, enabling a dynamic loop where the user controls the application lifecycle.
 
 * **The Goal:** Create a user-friendly interface for data entry and manipulation.
 * **The Mechanism:** A `while-switch` control structure paired with a `Scanner` buffer manager.
@@ -52,10 +52,10 @@ The application now uses a **State-Machine** approach:
 
 1.  **Phase 1 - 2.0:** Core OOP and Logic implementation. (Completed)
 2.  **Phase 3.0 (Current):** **Interactive CLI.** Full Scanner integration and Menu system.
-3.  **Phase 4.0 (Next):** **File Persistence.** Implementing `java.io` to save the `ArrayList` to a `.csv` or `.txt` file so data survives a restart.
+3.  **Phase 4.0 (Next):** **File Persistence.** Implementing `java.io` to save the `ArrayList` to a `.csv` or `.txt` file.
 
 ---
 
 ##  References & Best Practices
 * **State Management:** Using a boolean flag to control the main loop is a standard pattern for CLI tools.
-* **Resource Management:** Utilizing `reader.close()` to prevent memory leaks in the Java Virtual Machine.
+* **Resource Management:** Utilizing `reader.close()` to prevent memory leaks.
