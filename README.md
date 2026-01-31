@@ -29,7 +29,7 @@ v4.0 introduces the `java.io` implementation, moving the project into the "The T
 
 ---
 
-## 🛠 Deep Dive: Architecture & Engineering
+##  Deep Dive: Architecture & Engineering
 
 ### 1. Service Layer Pattern
 We refactored `EmployeeManager` into `EmployeeService`. This follows the **Single Responsibility Principle (SRP)**:
@@ -50,11 +50,12 @@ To prevent ID collisions after a restart, the system now implements an **Auto-In
 
 ##  Project Roadmap: The "Data-Centric" Evolution
 
-1.  **Phase 1.0 - 2.0:** Core OOP and Logic implementation. (Completed)
-2.  **Phase 3.0:** Interactive CLI (Scanner integration). (Completed)
-3.  **Phase 4.0 (Current):** **File Persistence.** Robust CSV storage and Service Layer refactor.
-4.  **Phase 5.0 (Next):** **Search & Sort Algorithms.** Implementing advanced filtering by Department and Salary sorting.
+##  Project Roadmap: The Evolution
 
+1.  **Phase 1.0 - 3.0:** Core OOP, Logic, and Interactive CLI. (Completed)
+2.  **Phase 4.0 (Current):** **File Persistence.** Introduction of the **Service Layer** and CSV storage.
+3.  **Phase 5.0 (Next):** **Search & Sort Algorithms.** Advanced data manipulation.
+4.  **Phase 6.0 (Future):** **Database Integration (SQL).** Migrating from CSV to a relational database using the **DAO (Data Access Object) Pattern**.
 ---
 
 ##  Design Decisions & Best Practices
