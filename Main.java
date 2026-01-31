@@ -1,25 +1,38 @@
-import java.util.ArrayList;
+import model.Employee;
+import service.EmployeeService;
+import java.util.Scanner;
 
 public class Main {
-    
     public static void main(String[] args) {
-        
-        
-        ArrayList<Employee> employeesList = new ArrayList<>();
+        EmployeeService service = new EmployeeService();
+        Scanner sc = new Scanner(System.in);
+        int option;
 
-        employeesList.add(new Employee(001, "Israel V", "DevOps", 27000.00));
-        employeesList.add(new Employee(002, "Lola B", "C. Success", 25000.00));
-        employeesList.add(new Employee(003, "Javi G", "Sales", 40000.00));
+        do {
+            System.out.println("\n--- EMS Project (Fase 2: Persistencia) ---");
+            System.out.println("1. Agregar Empleado");
+            System.out.println("2. Listar Empleados (desde CSV)");
+            System.out.println("3. Eliminar Empleado");
+            System.out.println("0. Salir");
+            System.out.print("Selección: ");
+            option = sc.nextInt();
+            sc.nextLine(); // Limpiar buffer
 
-        System.out.println("Welcome to this provisional Employee Management System v1.0 ");
-        
-        
-        System.out.println("----------------------------------------------------------------");
-
-        for (Employee emp : employeesList){
-            System.out.println(emp);
-        }
-        
-        System.out.println("----------------------------------------------------------------------");
+            switch (option) {
+                case 1:
+                    System.out.print("Nombre: "); String n = sc.nextLine();
+                    System.out.print("Depto: "); String d = sc.nextLine();
+                    System.out.print("Salario: "); double s = sc.nextDouble();
+                    service.addEmployee(n, d, s);
+                    break;
+                case 2:
+                    service.getAllEmployees().forEach(System.out::println);
+                    break;
+                case 3:
+                    System.out.print("ID a borrar: ");
+                    service.deleteEmployee(sc.nextInt());
+                    break;
+            }
+        } while (option != 0);
     }
 }

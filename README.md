@@ -1,62 +1,67 @@
-# Employee Resource Manager (ERM) — Phase 1: The Foundation
+# Employee Management System (EMS) — Phase 4.0: File Persistence & Service Architecture
 
-A foundational Java implementation for corporate workforce management. This project focuses on **Encapsulation** and **State Management** to handle sensitive employee data securely.
-
----
-
-## The Quick Start (ABC)
-
-This system acts as a digital filing cabinet for a company's most important asset: its people.
-
-* **The Goal:** Transition from "loose variables" to structured **Objects**.
-* **The Mechanism:** A dedicated `Employee` class that protects data using `private` access modifiers (Encapsulation).
-* **The Result:** A clean, reusable blueprint that ensures data integrity (e.g., preventing negative salaries).
+This version marks a major milestone: the transition from a volatile "in-memory" script to a persistent **Data-Driven Application**. The system now ensures that no data is lost when the application is terminated.
 
 ---
 
-## 🚀 How to Run
+##  Upgrade: Persistence (v4.0)
 
-1.  **Compile:** ```bash
-    javac Main.java Employee.java
+v4.0 introduces the `java.io` implementation, moving the project into the "The Tune-Up" stage where data lives on the disk, not just in RAM.
+
+* **The Goal:** Ensure data integrity across multiple application lifecycles.
+* **The Mechanism:** A **Service-Oriented Architecture (SOA)** where `EmployeeService` handles the bridge between the logic and the `employees.csv` file.
+* **The Result:** A professional-grade CLI where every addition or deletion is instantly synchronized with a physical database file.
+
+---
+
+##  How to Run
+
+1.  **Structure Check:** Ensure your files are in their respective folders (`model/` and `service/`).
+2.  **Compile:**
+    ```bash
+    javac model/Employee.java service/EmployeeService.java Main.java
     ```
-2.  **Execute:** ```bash
+3.  **Execute:**
+    ```bash
     java Main
     ```
-3.  **Interact:** Follow the terminal prompts to create your first organizational record.
+4.  **Persistence Check:** After closing the app, look for `employees.csv` in your root directory. Your data is safe!
 
 ---
 
-## Deep Dive: Architecture & Strategy
+##  Deep Dive: Architecture & Engineering
 
-### Real-World Use Case
-In a corporate environment, data cannot be "flat." You must associate names with unique IDs to avoid collisions between employees with the same name. By using **Object-Oriented Programming (OOP)**, we ensure that an "Employee" is a complete package of both data and logic.
+### 1. Service Layer Pattern
+We refactored `EmployeeManager` into `EmployeeService`. This follows the **Single Responsibility Principle (SRP)**:
+- **Main:** Handles only user interaction (UI).
+- **EmployeeService:** Handles business logic and file I/O operations.
+- **Employee:** A pure POJO (Plain Old Java Object) representing the data model.
 
-### Components
-* **The Model (Employee.java):** The "Blueprint." It defines what an employee *is* (ID, Name, Dept, Salary).
-* **The Controller (Main.java):** The "Brain." It handles user input and manages the collection of employees.
-* **Encapsulation:** By making fields `private`, we prevent external code from corrupting data. Access is only granted through controlled "Getters" and "Setters."
+### 2. File I/O & Serialization
 
+We implemented manual serialization to CSV format:
+- **Writing:** Using `PrintWriter` and `FileWriter` to "flush" the List to the disk.
+- **Reading:** Using `BufferedReader` and `FileReader` to reconstruct Java Objects from raw text lines during startup.
 
-
----
-
-## NOTE: Design Decisions
-
-* **ArrayList vs. Arrays:** We chose `ArrayList` for version 1.0 because it is **dynamic**. Unlike standard arrays, the list grows automatically as the company hires new staff.
-* **Memory State:** Currently, data lives in **RAM**. If the program closes, the data is wiped. Solving this is the primary goal for Phase 2.
+### 3. Smart ID Management
+To prevent ID collisions after a restart, the system now implements an **Auto-Increment Logic**. Upon startup, it scans the existing CSV file to determine the `lastId`, ensuring every new employee receives a unique, sequential identifier.
 
 ---
 
-## Project Roadmap: The "Tune-Up"
+##  Project Roadmap: The "Data-Centric" Evolution
 
-This is **Phase 1** of a multi-part series on building enterprise-grade software.
+##  Project Roadmap: The Evolution
 
-1.  **Phase 1 (Current):** Core OOP & CLI. Manual data entry and memory-based storage.
-2.  **Phase 2 (Coming):** **File Persistence.** Implementing logic to save/load employees from a `.csv` file.
-3.  **Phase 3 (Advanced):** **Search & Sort.** Implementing algorithms to filter by Department or sort by Seniority.
-4.  **Phase 4 (Expert):** **Interface & Database.** Moving from a console to a SQL Database.
-
+1.  **Phase 1.0 - 3.0:** Core OOP, Logic, and Interactive CLI. (Completed)
+2.  **Phase 4.0 (Current):** **File Persistence.** Introduction of the **Service Layer** and CSV storage.
+3.  **Phase 5.0 (Next):** **Search & Sort Algorithms.** Advanced data manipulation.
+4.  **Phase 6.0 (Future):** **Database Integration (SQL).** Migrating from CSV to a relational database using the **DAO (Data Access Object) Pattern**.
 ---
 
-##  References & Best Practices
-* **SOLID Principles:** This project aims to follow the **Single Responsibility Principle**.
+##  Design Decisions & Best Practices
+* **Encapsulation:** All file operations are `private` within the Service, exposing only clean business methods to the `Main` class.
+* **Resilience:** The system checks for the existence of `employees.csv` before reading. If it's missing, it gracefully creates a new environment instead of crashing.
+* **Scalability:** By using a `.csv` format, the data is now portable and can be opened in Excel or migrated to a SQL Database in the future.
+
+---
+*Developed as part of the professional software engineering blueprint series.*
